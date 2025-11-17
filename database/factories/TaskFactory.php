@@ -20,12 +20,12 @@ class TaskFactory extends Factory
     {
         $users = User::all()->pluck('id');
 
-        $authorId = !empty($users) ? $this->faker->randomElement($users->all()) : User::factory()->create()->id;
+        $authorId = !empty($users) ? $this->faker->randomElement($users->all()) : User::factory();
 
         if (!empty($users)) {
             $executorId = $this->faker->randomElement($users->add(null)->all());
         } else {
-            $executorId = $this->faker->randomElement([false, true]) ? User::factory()->create()->id : null;
+            $executorId = $this->faker->randomElement([false, true]) ? User::factory() : null;
         }
 
         return [
