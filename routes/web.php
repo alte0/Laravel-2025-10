@@ -19,7 +19,7 @@ Route::middleware('auth')->group(function () {
 
     Route::name('adminTasks.')->prefix('admin')->group(function () {
         Route::resource('/tasks', TaskController::class);
-    });
+    })->middleware('auth');
 });
 
 require __DIR__.'/auth.php';
