@@ -54,7 +54,7 @@ return [
 
         'stack' => [
             'driver' => 'stack',
-            'channels' => explode(',', (string) env('LOG_STACK', 'single')),
+            'channels' => ['single', 'telegramLoggerWithFallback'],
             'ignore_exceptions' => false,
         ],
 
@@ -63,6 +63,15 @@ return [
             'path' => storage_path('logs/laravel.log'),
             'level' => env('LOG_LEVEL', 'debug'),
             'replace_placeholders' => true,
+        ],
+
+        'telegramLoggerWithFallback' => [
+            'driver' => 'custom',
+            'via' => \App\Logging\TelegramLoggerWithFallback::class,
+            'telegramLogger' => [
+                'apiKey' => env('TELEGRAM_BOT_LARAVEL_10_2025_API_KEY'),
+                'channel' => env('TELEGRAM_CHANNEL_LOG'),
+            ]
         ],
 
         'daily' => [
@@ -80,16 +89,6 @@ return [
             'emoji' => env('LOG_SLACK_EMOJI', ':boom:'),
             'level' => env('LOG_LEVEL', 'critical'),
             'replace_placeholders' => true,
-        ],
-
-        'telegram' => [
-            'driver' => 'monolog',
-            'handler' => \Monolog\Handler\TelegramBotHandler::class,
-            'level' => 'error',
-            'with' => [
-                'apiKey' => env('TELEGRAM_BOT_LARAVEL_10_2025_API_KEY', ''),
-                'channel' => env('TELEGRAM_CHANNEL_LOG', ''),
-            ],
         ],
 
         'papertrail' => [
