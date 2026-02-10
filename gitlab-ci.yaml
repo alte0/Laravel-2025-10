@@ -1,0 +1,36 @@
+stages:
+  - test
+  - deploy
+  - rollback
+
+testing:
+  stage: test
+  script:
+    - cd $DEPLOY_DIR
+    - bash ./scripts/test-run.sh
+  only:
+    - master
+
+
+deploy:
+  stage: deploy
+  needs: [ "testing" ]
+  script:
+    - cd $DEPLOY_DIR
+    - bash ./scripts/deploy-run.sh
+  when:
+    - manual
+  only:
+    - master
+
+
+rollback:
+  stage: rollback
+  needs: [ "testing" ]
+  script:
+    - cd $DEPLOY_DIR
+    - bash ./scripts/rollback-run.sh
+  when:
+    - rollback
+  only:
+    - master
