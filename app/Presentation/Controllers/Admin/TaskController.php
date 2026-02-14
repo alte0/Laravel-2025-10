@@ -4,8 +4,7 @@ namespace App\Presentation\Controllers\Admin;
 
 use App\Application\DTO\Task\CreateTaskRequestDTO;
 use App\Application\DTO\Task\UpdateTaskRequestDTO;
-use App\Application\Handlers\CreateTakHandler;
-use App\Application\Handlers\UpdateTakHandler;
+use App\Application\Services\TaskService as TaskServiceDDD;
 use App\Http\Controllers\Controller;
 use App\Presentation\Requests\AdminTask\CreateTaskRequest;
 use App\Presentation\Requests\AdminTask\DeleteTaskRequest;
@@ -20,9 +19,8 @@ use Illuminate\Support\Facades\Auth;
 class TaskController extends Controller
 {
     public function __construct(
-        private readonly TaskService $taskService,
-        private readonly UpdateTakHandler $updateTakHandler,
-        private readonly CreateTakHandler $createTakHandler,
+        private readonly TaskService       $taskService,
+        private readonly TaskServiceDDD $taskServiceDDD
     )
     {
     }
@@ -60,7 +58,8 @@ class TaskController extends Controller
         );
 
 //        $id = $this->taskService->create($createTaskRequestDTO);
-        $id = $this->createTakHandler->handle($createTaskRequestDTO);
+//        $id = $this->createTakHandler->handle($createTaskRequestDTO); // handle only command
+        $id = $this->taskServiceDDD->create($createTaskRequestDTO);
 
         return redirect()->route('adminTasks.tasks.show', ['task' => $id]);
     }
@@ -99,7 +98,8 @@ class TaskController extends Controller
         );
 
         //$this->taskService->update($updateTaskRequestDTO);
-        $this->updateTakHandler->handle($updateTaskRequestDTO);
+//        $this->updateTakHandler->handle($updateTaskRequestDTO); // handle only command
+        $this->taskServiceDDD->update($updateTaskRequestDTO);
 
         return redirect()->route('adminTasks.tasks.edit', ['task' => $updateTaskRequestDTO->getId()]);
     }

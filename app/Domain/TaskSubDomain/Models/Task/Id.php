@@ -1,10 +1,9 @@
 <?php
 
-namespace App\Domain\TaskSubDomain\VO;
+namespace App\Domain\TaskSubDomain\Models\Task;
 
 final class Id
 {
-
     private int $value;
 
     final public function __construct(int $value = 0)
@@ -16,7 +15,7 @@ final class Id
         $this->value = $value;
     }
 
-    final public function getValue(): int|null
+    final public function toInt(): int
     {
         return $this->value;
     }

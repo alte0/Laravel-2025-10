@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Domain\TaskSubDomain\VO;
+namespace App\Domain\TaskSubDomain\Models\Task;
 
 final class Description
 {
@@ -15,7 +15,7 @@ final class Description
         $this->value = $value;
     }
 
-    final public function getValue(): string
+    final public function getString(): string
     {
         return $this->value;
     }

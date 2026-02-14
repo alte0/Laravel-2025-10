@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Domain\TaskSubDomain\VO;
+namespace App\Domain\TaskSubDomain\Models\Task;
 
 final class AuthorId
 {
@@ -16,7 +16,7 @@ final class AuthorId
         $this->value = $value;
     }
 
-    final public function getValue(): int
+    final public function toInt(): int
     {
         return $this->value;
     }

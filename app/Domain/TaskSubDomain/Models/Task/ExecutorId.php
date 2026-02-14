@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Domain\TaskSubDomain\VO;
+namespace App\Domain\TaskSubDomain\Models\Task;
 
 final class ExecutorId
 {
@@ -15,7 +15,7 @@ final class ExecutorId
         $this->value = $value;
     }
 
-    final public function getValue(): int|null
+    final public function toInt(): int|null
     {
         return $this->value;
     }
